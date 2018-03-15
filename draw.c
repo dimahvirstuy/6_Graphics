@@ -25,6 +25,22 @@
 void add_box( struct matrix * edges,
               double x, double y, double z,
               double width, double height, double depth ) {
+  //front face
+  add_edge(edges, x, y, z, x+width, y, z);
+  add_edge(edges, x, y, z, x, y-height, z);
+  add_edge(edges, x, y-height, z, x+width, y-height, z);
+  add_edge(edges, x+width, y, z, x+width, y-height, z);
+  //back face
+  add_edge(edges, x, y, z-depth, x+width, y, z-depth);
+  add_edge(edges, x, y, z-depth, x, y-height, z-depth);
+  add_edge(edges, x, y-height, z-depth, x+width, y-height, z-depth);
+  add_edge(edges, x+width, y, z-depth, x+width, y-height, z-depth);
+  //connecting edges
+  add_edge(edges, x, y, z, x, y, z-depth);
+  add_edge(edges, x+width, y, z, x+width, y, z-depth);
+  add_edge(edges, x, y-height, z, x, y-height, z-depth);
+  add_edge(edges, x+width, y-height, z, x+width, y-height, z-depth);
+  return;
 }
 
 /*======== void add_sphere() ==========
@@ -45,6 +61,7 @@ void add_box( struct matrix * edges,
 void add_sphere( struct matrix * edges, 
                  double cx, double cy, double cz,
                  double r, int step ) {
+  
   return;
 }
 
@@ -62,6 +79,16 @@ void add_sphere( struct matrix * edges,
   ====================*/
 struct matrix * generate_sphere(double cx, double cy, double cz,
                                 double r, int step ) {
+  struct matrix * ans = new_matrix[4][step * step]; int i; int j; double inc; int numpoints;
+  inc = 1.0 / step;
+  for (i = 0; i <= 1.0; i += inc) {
+    for (j = 0; j <=  1; j += inc) {
+      ans->m[0][numpoints] = r * cos(j * M_PI) + cx;
+      ans->m[1][numpoints] = r * cos(j * M_PI) + cx;//finish
+      ans->m[2][numpoints] = r * cos(j * M_PI) + cx;//finish
+      numpoints++;
+    }
+  }
   return NULL;
 }
 
