@@ -209,7 +209,29 @@ void parse_file ( char * filename,
       draw_lines(edges, s, c);
       save_extension(s, line);
     }//end save
-    
+    else if (strncmp(line, "box", strlen(line)) == 0) {
+      int x; int y; int z; int h; int w; int d;
+      sscanf(line, "%d %d %d %d %d %d", x, y, z, h, w, d);
+      add_box(edges, x, y, z, h, w, d);
+    }
+    else if (strncmp(line, "sphere", strlen(line)) == 0) {
+      int x; int y; int z; int r;
+      sscanf(line, "%d %d %d %d", x, y, z, r);
+      add_sphere(edges, x, y, z, r);
+    }
+    else if (strncmp(line, "torus", strlen(line)) == 0) {
+      int x; int y; int z; int r1; int r2;
+      sscanf(line, "%d %d %d %d %d", x, y, z, r1, r2);
+      add_torus(edges, x, y, z, r1, r2);
+    }
+    else if (strncmp(line, "clear", strlen(line)) == 0) {
+      int i; int j;
+      for (i = 0; i < edges->rows; i++) {
+	for (j = 0; j < edges->cols; j++) {
+	  edges->m[i][j] = 0;
+	}
+      }
+    } 
   }
 }
   
